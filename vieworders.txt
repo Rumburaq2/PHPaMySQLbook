@@ -1,0 +1,30 @@
+<?php
+  // vytváříme zkrácené názvy proměnných
+  $document_root = $_SERVER['DOCUMENT_ROOT'];
+?>
+<!DOCTYPE html>
+   <html>
+     <head>
+       <meta charset=“UTF-8“ />
+       <title>Bobovy autodíly – Výsledek objednávky</title>
+     </head>
+     <body>
+       <h1>Bobovy autodily</h1>
+       <h2>Objednavky zakazniku</h2>
+       <?php
+          @$fp = fopen("$document_root/orders.txt", 'rb');
+          flock($fp, LOCK_SH);//uzmankneme soubor pro čtení
+          if(!$fp){
+            echo "<p><strong>Žádné nevyřízené objednávky. <br />
+            zkuste to později xd</strong></p>";
+            exit;
+          }
+
+          while (!feof($fp)) {
+            $order = fgets($fp);
+            echo htmlspecialchars($order)."<br />";
+          }
+
+          flock($fp, LOCK_UN); // uvolníme zámek čtení
+          fclose($fp);
+        ?>
