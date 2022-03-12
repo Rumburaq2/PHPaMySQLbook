@@ -1,2 +1,2 @@
 # PHPaMySQLbook
-na učení
+začátek kapitoly 2 cca
